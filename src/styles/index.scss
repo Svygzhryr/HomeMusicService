@@ -1,0 +1,60 @@
+body {
+    height: 100%;
+    width: 100%;
+    background-color: $d1;
+
+    * {
+        font-family: 'Poppins', sans-serif;
+        color: $l1;
+
+        transition: all 0.2s ease-in-out;
+    }
+}
+
+button {
+    background-color: $d3;
+    border: none;
+    font-size: 24px;
+
+    &:hover {
+        background-color: $d3a;
+        cursor: pointer;
+    }
+}
+
+input {
+    padding: 5px 10px;
+    font-size: 18px;
+
+    background-color: $d3;
+    border: 2px inset transparent;
+
+    &:focus {
+        outline: none;
+        border: 2px inset $l2;
+    }
+}
+
+label {
+    color: $l1;
+}
+
+h1 {
+    font-size: 48px;
+    color: $l1;
+}
+
+h2 {
+    font-size: 36px;
+    color: $l1;
+}
+
+h3 {
+    font-size: 32px;
+    color: $l1;
+}
+
+h4 {
+    font-size: 28px;
+    color: $l1;
+}
