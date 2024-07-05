@@ -4,11 +4,16 @@ import ReactDOM from 'react-dom/client'
 import React from 'react'
 
 import '@/styles/index.scss'
+import { NotFound } from './pages/404'
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Library />,
+    },
+    {
+        path: '/*',
+        element: <NotFound />,
     },
 ])
 
