@@ -17,7 +17,7 @@
         }
 
         .mask {
-            background-color: $d1t;
+            background-color: $d2t;
         }
     }
 }
@@ -37,11 +37,11 @@
     width: 50px;
 
     opacity: 0;
-    background-color: $d3;
+    background-color: $m1;
     z-index: 2;
 
     &:hover {
-        background-color: $d2;
+        background-color: $m1;
     }
 }
 
