@@ -43,7 +43,6 @@
     opacity: 0;
     background-color: $m1;
     z-index: 2;
-
     &:hover {
         background-color: $m1;
     }
@@ -64,8 +63,7 @@
     position: absolute;
     height: 10px;
     width: 0;
-    margin: -14px auto;
-
+    margin: -30px auto;
     opacity: 0;
     background-color: $m1;
 }

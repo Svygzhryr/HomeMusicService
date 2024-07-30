@@ -29,9 +29,20 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
         track.paused ? startPlayback(track) : stopPlayback(track, interval)
     }
 
+    function formCurrentTime(currentDuration: number) {
+        const minutes = Math.floor(currentDuration / 60)
+        const seconds = Math.floor(currentDuration % 60)
+
+        return `${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`
+    }
+
+    useEffect(() => {}, [currentDuration])
+
     useEffect(() => {
-        console.log(currentDuration)
-    }, [currentDuration])
+        if (!audioRef.current) return
+        console.log(audioRef.current?.volume)
+        audioRef.current.volume = 0.1
+    }, [audioRef])
 
     return (
         <div className={styles.wrapper} onClick={handleClick}>
@@ -45,7 +56,6 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
                     <button
                         className={` ${isPlaying ? styles.play : styles.pause}`}
                     ></button>
-
                     <div
                         style={{
                             width: `${
@@ -54,9 +64,8 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
                             }%`,
                         }}
                         className={styles.progressBar}
-                    >
-                        {audioRef.current?.duration}
-                    </div>
+                    ></div>
+                    <h5>{formCurrentTime(currentDuration)}</h5>
                 </div>
             </div>
         </div>
