@@ -4,16 +4,17 @@
     height: 200px;
 
     &:hover {
-        .cover {
-            cursor: pointer;
-        }
+        cursor: pointer;
 
-        .pause {
+        .playButton,
+        .title,
+        .progressBar,
+        .time {
             opacity: 1;
         }
 
-        .progressBar {
-            opacity: 1;
+        .title {
+            color: $l1;
         }
 
         .mask {
@@ -26,46 +27,37 @@
 }
 
 .controls {
+    top: 0;
+    left: 0;
 }
 
-.play,
-.pause {
+.playButton {
+    height: 60px;
+    width: 60px;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.pause {
-    height: 50px;
-    width: 50px;
 
     opacity: 0;
-    background-color: $m1;
     z-index: 2;
-    &:hover {
-        background-color: $m1;
-    }
-}
 
-.play {
-    padding: 0;
-    height: 0;
-    width: 0;
+    stroke: $m1;
 
-    border-left: 20px solid $m1;
-    border-top: 20px solid transparent;
-    border-bottom: 20px solid transparent;
-    border-right: 20px solid transparent;
+    transform: translate(-50%, -50%);
 }
 
 .progressBar {
     position: absolute;
-    height: 10px;
+    bottom: 0;
+    height: 8px;
     width: 0;
-    margin: -30px auto;
+    margin: 0 auto;
+
     opacity: 0;
+    border-radius: 10px;
     background-color: $m1;
+
+    z-index: 3;
 }
 
 .cover {
@@ -73,8 +65,30 @@
     width: 100%;
 }
 
+.title {
+    position: absolute;
+    padding: 8px;
+    margin: 0;
+
+    font-size: 22px;
+
+    opacity: 0;
+}
+
+.time {
+    position: absolute;
+    font-size: 18px;
+    margin: 14px 8px;
+    bottom: 0;
+    opacity: 0;
+}
+
 .mask {
     position: absolute;
     width: 100%;
     height: 100%;
+}
+
+.isPlaying {
+    opacity: 1;
 }
