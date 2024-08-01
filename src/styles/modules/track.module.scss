@@ -44,6 +44,8 @@
     stroke: $m1;
 
     transform: translate(-50%, -50%);
+
+    transition: all 0.2s ease-in-out;
 }
 
 .progressBar {
@@ -91,4 +93,25 @@
 
 .isPlaying {
     opacity: 1;
+}
+
+.invisible {
+    opacity: 0 !important;
+}
+
+.currentlyPlaying {
+    opacity: 1;
+
+    transform: translate(50px, -110px) scale(0.5);
+}
+
+@keyframes playing {
+    0% {
+    }
+
+    50% {
+    }
+
+    100% {
+    }
 }

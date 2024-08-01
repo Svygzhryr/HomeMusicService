@@ -1,6 +1,7 @@
 import { Track } from '../components/Track'
 import { tracks } from '../apiMock'
 import styles from '../styles/modules/library.module.scss'
+import { TrackAdd } from '../components/TrackAdd'
 
 export const Library = () => {
     return (
@@ -14,6 +15,7 @@ export const Library = () => {
                         file={track.file}
                     />
                 ))}
+                <TrackAdd />
             </div>
         </div>
     )

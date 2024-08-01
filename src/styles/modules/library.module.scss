@@ -1,5 +1,6 @@
 .tracksWrapper {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, fit-content(100%));
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;

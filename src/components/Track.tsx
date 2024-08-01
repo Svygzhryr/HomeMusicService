@@ -16,7 +16,6 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
     function startPlayback(track: HTMLAudioElement) {
         const interval = setInterval(() => {
             setCurrentDuration(audioRef.current?.currentTime || 0)
-            console.log('interval', interval)
         }, 200)
         setActiveInterval(interval)
         setIsPlaying(true)
@@ -46,16 +45,22 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
     function onSongFinish() {
         setIsPlaying(false)
         clearInterval(activeInterval)
+        startPlayback(audioRef.current as HTMLAudioElement)
+    }
+
+    function calculateSongProgress() {
+        if (!audioRef.current) return
+        return Math.floor((currentDuration / audioRef.current.duration) * 100)
     }
 
     useEffect(() => {
-        if ((currentDuration / audioRef.current?.duration) * 100 >= 100)
+        if (!audioRef.current) return
+        if ((currentDuration / audioRef.current.duration) * 100 >= 100)
             onSongFinish()
     }, [currentDuration])
 
     useEffect(() => {
         if (!audioRef.current) return
-        console.log(audioRef.current?.volume)
         audioRef.current.volume = 0.1
     }, [audioRef])
 
@@ -76,16 +81,19 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
             <div className={styles.controls}>
                 <div
                     style={{
-                        width: `${
-                            (currentDuration / audioRef.current?.duration) * 100
-                        }%`,
+                        width: `${calculateSongProgress()}%`,
                     }}
                     className={`${styles.progressBar} ${isPlaying ? styles.isPlaying : ''}`}
                 ></div>
                 <img
-                    className={styles.playButton}
-                    src={isPlaying ? stop : play}
-                    alt=""
+                    className={`${styles.playButton} ${isPlaying ? styles.currentlyPlaying : ''}`}
+                    src={play}
+                    alt="play"
+                />
+                <img
+                    className={`${styles.playButton} ${isPlaying ? '' : styles.invisible}`}
+                    src={stop}
+                    alt="stop"
                 />
 
                 <h5 className={styles.time}>
