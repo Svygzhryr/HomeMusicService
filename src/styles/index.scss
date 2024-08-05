@@ -24,6 +24,7 @@ button {
 input {
     padding: 5px 10px;
     font-size: 18px;
+    width: 200px;
 
     background-color: $d3;
     border: 2px inset transparent;
@@ -34,8 +35,13 @@ input {
     }
 }
 
+input[type='file'] {
+    display: none;
+}
+
 label {
     color: $l1;
+    width: 200px;
 }
 
 h1 {

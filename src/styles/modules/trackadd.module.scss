@@ -39,6 +39,11 @@
     transform: translate(-50%, -50%);
 
     z-index: 10;
+
+    input,
+    label {
+        margin-bottom: 20px;
+    }
 }
 
 .mask {
@@ -50,4 +55,33 @@
     background-color: $d2t;
 
     z-index: 8;
+}
+
+.coverInput,
+.songInput {
+    display: block;
+    width: 200px;
+    margin: 0 auto;
+    padding: 5px 10px;
+
+    font-size: 18px;
+    text-align: start;
+    color: $l3;
+
+    background-color: $d3;
+    border: 2px inset transparent;
+
+    &:focus {
+        outline: none;
+        border: 2px inset $l2;
+    }
+
+    &:hover {
+        cursor: pointer;
+        background-color: $d1a;
+    }
+}
+
+.submitButton {
+    padding: 4px 30px;
 }
