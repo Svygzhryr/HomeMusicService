@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react'
+import { FC, MouseEvent, useEffect, useRef, useState } from 'react'
 import styles from '../styles/modules/track.module.scss'
 import placeholder from '../assets/img/placeholder.png'
 import play from '../assets/img/play.svg'
@@ -16,6 +16,7 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
     function startPlayback(track: HTMLAudioElement) {
         const interval = setInterval(() => {
             setCurrentDuration(audioRef.current?.currentTime || 0)
+            console.log('interval', interval)
         }, 200)
         setActiveInterval(interval)
         setIsPlaying(true)
@@ -53,6 +54,16 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
         return Math.floor((currentDuration / audioRef.current.duration) * 100)
     }
 
+    function handleProgressClick(e: MouseEvent) {
+        if (!audioRef.current) return
+        e.stopPropagation()
+        const x = e.pageX - e.currentTarget.getBoundingClientRect().left
+        const barPercent = x / 200
+        const maxDuration = audioRef.current.duration
+
+        audioRef.current.currentTime = maxDuration * barPercent
+    }
+
     useEffect(() => {
         if (!audioRef.current) return
         if ((currentDuration / audioRef.current.duration) * 100 >= 100)
@@ -80,11 +91,16 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
             </div>
             <div className={styles.controls}>
                 <div
-                    style={{
-                        width: `${calculateSongProgress()}%`,
-                    }}
-                    className={`${styles.progressBar} ${isPlaying ? styles.isPlaying : ''}`}
-                ></div>
+                    onClick={handleProgressClick}
+                    className={styles.progressWrapper}
+                >
+                    <div
+                        style={{
+                            width: `${calculateSongProgress()}%`,
+                        }}
+                        className={`${styles.progressBar} ${isPlaying ? styles.isPlaying : ''}`}
+                    ></div>
+                </div>
                 <img
                     className={`${styles.playButton} ${isPlaying ? styles.currentlyPlaying : ''}`}
                     src={play}

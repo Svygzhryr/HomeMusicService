@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import styles from '../styles/modules/trackadd.module.scss'
 import add from '../assets/img/add.svg'
 import { useTrackContext } from '../context'
@@ -17,6 +17,20 @@ export const TrackAdd = () => {
 
     function handleMaskClick() {
         setIsModalActive(false)
+    }
+
+    function handleSetFile(e: ChangeEvent<HTMLInputElement>) {
+        const input = e.target as HTMLInputElement
+        if (!input) return
+        if (!input.files) return
+        setSongFile(URL.createObjectURL(input.files[0]))
+    }
+
+    function handleSetCover(e: ChangeEvent<HTMLInputElement>) {
+        const input = e.target as HTMLInputElement
+        if (!input) return
+        if (!input.files) return
+        setSongCover(URL.createObjectURL(input.files[0]))
     }
 
     function handleFormSubmit(evt: FormEvent) {
@@ -67,7 +81,7 @@ export const TrackAdd = () => {
                         Song file (.mp3/.wav)*
                     </label>
                     <input
-                        onChange={(e) => setSongFile(e.target.value)}
+                        onChange={handleSetFile}
                         id="song-upload"
                         className={styles.song}
                         placeholder=".mp3, .wav"
@@ -78,7 +92,7 @@ export const TrackAdd = () => {
                     </label>
 
                     <input
-                        onChange={(e) => setSongCover(e.target.value)}
+                        onChange={handleSetCover}
                         id="cover-upload"
                         className={styles.cover}
                         placeholder="Song cover (png, jpg)"
