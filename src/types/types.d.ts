@@ -10,6 +10,10 @@ interface TrackContextReturn {
 export interface ITrackContext {
     tracks: ITracks[]
     addTrack: (tracks: ITracks[]) => void
+    volume: number
+    setVolume: (volume: number) => void
+    isPlaying: boolean
+    setIsPlaying: (isPlaying: boolean) => void
 }
 
 export interface ITracks {

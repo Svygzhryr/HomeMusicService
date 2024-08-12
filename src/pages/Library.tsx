@@ -2,18 +2,26 @@ import { Track } from '../components/Track'
 import styles from '../styles/modules/library.module.scss'
 import { TrackAdd } from '../components/TrackAdd'
 import { TrackContext, useTrackContext } from '../context'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import { Player } from '../components/Player'
 
 export const Library = () => {
     const { tracks } = useTrackContext()
     const [trackList, setTrackList] = useState(tracks)
-
-    useEffect(() => {
-        console.log(trackList)
-    }, [trackList])
+    const [volume, setVolume] = useState(0.2)
+    const [isPlaying, setIsPlaying] = useState(false)
 
     return (
-        <TrackContext value={{ tracks: trackList, addTrack: setTrackList }}>
+        <TrackContext
+            value={{
+                tracks: trackList,
+                addTrack: setTrackList,
+                volume,
+                setVolume,
+                isPlaying,
+                setIsPlaying,
+            }}
+        >
             <div>
                 <div className={styles.tracksWrapper}>
                     {trackList.map((track) => (
@@ -26,6 +34,7 @@ export const Library = () => {
                     ))}
                     <TrackAdd />
                 </div>
+                <Player />
             </div>
         </TrackContext>
     )

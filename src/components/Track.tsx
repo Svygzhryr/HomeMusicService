@@ -4,9 +4,11 @@ import placeholder from '../assets/img/placeholder.png'
 import play from '../assets/img/play.svg'
 import stop from '../assets/img/stop.svg'
 import { TrackProps } from '../types/types'
+import { useTrackContext } from '../context'
 
 export const Track: FC<TrackProps> = ({ name, cover, file }) => {
     const audioRef = useRef<HTMLAudioElement | null>(null)
+    const { volume, setIsPlaying: setIsGlobalPlaying } = useTrackContext()
     const [isPlaying, setIsPlaying] = useState(false)
     const [currentDuration, setCurrentDuration] = useState(0)
     const [activeInterval, setActiveInterval] = useState<
@@ -16,16 +18,17 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
     function startPlayback(track: HTMLAudioElement) {
         const interval = setInterval(() => {
             setCurrentDuration(audioRef.current?.currentTime || 0)
-            console.log('interval', interval)
         }, 200)
         setActiveInterval(interval)
         setIsPlaying(true)
+        setIsGlobalPlaying(true)
         track.play()
     }
 
     function stopPlayback(track: HTMLAudioElement) {
         clearInterval(activeInterval)
         setIsPlaying(false)
+        setIsGlobalPlaying(false)
         track.pause()
     }
 
@@ -61,6 +64,7 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
         const barPercent = x / 200
         const maxDuration = audioRef.current.duration
 
+        setCurrentDuration(maxDuration * barPercent)
         audioRef.current.currentTime = maxDuration * barPercent
     }
 
@@ -72,8 +76,8 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
 
     useEffect(() => {
         if (!audioRef.current) return
-        audioRef.current.volume = 0.2
-    }, [audioRef])
+        audioRef.current.volume = volume
+    }, [audioRef, volume])
 
     return (
         <div className={styles.wrapper} onClick={handleClick}>
