@@ -9,7 +9,9 @@ export const Library = () => {
     const { tracks } = useTrackContext()
     const [trackList, setTrackList] = useState(tracks)
     const [volume, setVolume] = useState(0.2)
-    const [isPlaying, setIsPlaying] = useState(false)
+    const [isGlobalPlaying, setIsGlobalPlaying] = useState(false)
+    const [currentGlobalDuration, setCurrentGlobalDuration] = useState(0)
+    const [globalAudioRef, setGlobalAudioRef] = useState(null)
 
     return (
         <TrackContext
@@ -18,8 +20,12 @@ export const Library = () => {
                 addTrack: setTrackList,
                 volume,
                 setVolume,
-                isPlaying,
-                setIsPlaying,
+                isGlobalPlaying,
+                setIsGlobalPlaying,
+                currentGlobalDuration,
+                setCurrentGlobalDuration,
+                globalAudioRef,
+                setGlobalAudioRef,
             }}
         >
             <div>

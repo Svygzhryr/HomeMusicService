@@ -1,9 +1,27 @@
-import { MouseEvent } from 'react'
+import { MouseEvent, useEffect, useState } from 'react'
 import styles from '../styles/modules/player.module.scss'
 import { useTrackContext } from '../context'
+import { Progressbar } from './Progressbar'
 
 export const Player = () => {
-    const { setVolume, volume, isPlaying } = useTrackContext()
+    const [currentDuration, setCurrentDuration] = useState(0)
+    const [activeInterval, setActiveInterval] = useState<
+        NodeJS.Timeout | number
+    >(0)
+
+    const {
+        setVolume,
+        volume,
+        isGlobalPlaying: isPlaying,
+        globalAudioRef: audioRef,
+    } = useTrackContext()
+
+    function updatePlayer() {
+        const interval = setInterval(() => {
+            setCurrentDuration(audioRef.current?.currentTime || 0)
+        }, 200)
+        setActiveInterval(interval)
+    }
 
     function handleVolumeClick(e: MouseEvent) {
         const { bottom } = e.currentTarget.getBoundingClientRect()
@@ -11,12 +29,28 @@ export const Player = () => {
         setVolume(percent)
     }
 
+    useEffect(() => {}, [audioRef])
+
+    useEffect(() => {
+        if (isPlaying) {
+            updatePlayer()
+        } else {
+            clearInterval(activeInterval)
+        }
+    }, [isPlaying])
+
     return (
         <div className={styles.wrapper}>
             <div
                 style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
                 className={styles.status}
             ></div>
+            <Progressbar
+                audioRef={audioRef}
+                currentDuration={currentDuration}
+                isPlaying={isPlaying}
+                setCurrentDuration={setCurrentDuration}
+            />
             <div onClick={handleVolumeClick} className={styles.volumeContainer}>
                 <div
                     style={{

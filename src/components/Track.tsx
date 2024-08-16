@@ -1,14 +1,15 @@
-import { FC, MouseEvent, useEffect, useRef, useState } from 'react'
+import { FC, useEffect, useRef, useState } from 'react'
 import styles from '../styles/modules/track.module.scss'
 import placeholder from '../assets/img/placeholder.png'
 import play from '../assets/img/play.svg'
 import stop from '../assets/img/stop.svg'
 import { TrackProps } from '../types/types'
 import { useTrackContext } from '../context'
+import { Progressbar } from './Progressbar'
 
 export const Track: FC<TrackProps> = ({ name, cover, file }) => {
     const audioRef = useRef<HTMLAudioElement | null>(null)
-    const { volume, setIsPlaying: setIsGlobalPlaying } = useTrackContext()
+    const { volume, setIsGlobalPlaying, setGlobalAudioRef } = useTrackContext()
     const [isPlaying, setIsPlaying] = useState(false)
     const [currentDuration, setCurrentDuration] = useState(0)
     const [activeInterval, setActiveInterval] = useState<
@@ -22,6 +23,7 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
         setActiveInterval(interval)
         setIsPlaying(true)
         setIsGlobalPlaying(true)
+        setGlobalAudioRef(track)
         track.play()
     }
 
@@ -52,22 +54,6 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
         startPlayback(audioRef.current as HTMLAudioElement)
     }
 
-    function calculateSongProgress() {
-        if (!audioRef.current) return
-        return Math.floor((currentDuration / audioRef.current.duration) * 100)
-    }
-
-    function handleProgressClick(e: MouseEvent) {
-        if (!audioRef.current) return
-        e.stopPropagation()
-        const x = e.pageX - e.currentTarget.getBoundingClientRect().left
-        const barPercent = x / 200
-        const maxDuration = audioRef.current.duration
-
-        setCurrentDuration(maxDuration * barPercent)
-        audioRef.current.currentTime = maxDuration * barPercent
-    }
-
     useEffect(() => {
         if (!audioRef.current) return
         if ((currentDuration / audioRef.current.duration) * 100 >= 100)
@@ -94,17 +80,12 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
                 />
             </div>
             <div className={styles.controls}>
-                <div
-                    onClick={handleProgressClick}
-                    className={styles.progressWrapper}
-                >
-                    <div
-                        style={{
-                            width: `${calculateSongProgress()}%`,
-                        }}
-                        className={`${styles.progressBar} ${isPlaying ? styles.isPlaying : ''}`}
-                    ></div>
-                </div>
+                <Progressbar
+                    audioRef={audioRef}
+                    currentDuration={currentDuration}
+                    setCurrentDuration={setCurrentDuration}
+                    isPlaying={isPlaying}
+                />
                 <img
                     className={`${styles.playButton} ${isPlaying ? styles.currentlyPlaying : ''}`}
                     src={play}

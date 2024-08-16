@@ -7,8 +7,12 @@ const context = createContext<ITrackContext>({
     addTrack: () => {},
     volume: 0.2,
     setVolume: () => {},
-    isPlaying: false,
-    setIsPlaying: () => {},
+    isGlobalPlaying: false,
+    setIsGlobalPlaying: () => {},
+    currentGlobalDuration: 0,
+    setCurrentGlobalDuration: () => {},
+    globalAudioRef: null,
+    setGlobalAudioRef: () => {},
 })
 
 export const TrackContext = context.Provider

@@ -1,0 +1,26 @@
+.progressWrapper {
+    position: absolute;
+    bottom: 0;
+    height: 15px;
+    width: 100%;
+    margin: 0 auto;
+
+    z-index: 5;
+}
+
+.progressBar {
+    position: absolute;
+    bottom: 0;
+    height: 8px;
+    width: 0;
+
+    opacity: 0;
+    border-radius: 10px;
+    background-color: $m1;
+
+    z-index: 5;
+}
+
+.isPlaying {
+    opacity: 1;
+}
