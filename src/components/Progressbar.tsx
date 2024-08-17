@@ -6,18 +6,18 @@ interface ProgressbarProps {
     currentDuration: number
     setCurrentDuration: (currentGlobalDuration: number) => void
     isPlaying: boolean
+    isInPlayer?: boolean
 }
 
 export const Progressbar: FC<ProgressbarProps> = ({
-    // копать надо здесь
     audioRef,
     currentDuration,
     setCurrentDuration,
     isPlaying,
+    isInPlayer,
 }) => {
     function calculateSongProgress() {
         if (!audioRef?.current) return
-        console.log('hi')
         return (currentDuration / audioRef.current.duration) * 100 || 0
     }
 
@@ -32,20 +32,14 @@ export const Progressbar: FC<ProgressbarProps> = ({
         audioRef.current.currentTime = maxDuration * barPercent
     }
 
-    useEffect(() => {
-        console.log(calculateSongProgress())
-    }, [currentDuration])
-
     return (
         <div onClick={handleProgressClick} className={styles.progressWrapper}>
             <div
                 style={{
                     width: `${calculateSongProgress() || 0}%`,
                 }}
-                className={`${styles.progressBar} ${isPlaying ? styles.isPlaying : ''}`}
-            >
-                {calculateSongProgress()}
-            </div>
+                className={`${styles.progressBar} ${isInPlayer ? styles.player : ''} ${isPlaying ? styles.isPlaying : ''}`}
+            ></div>
         </div>
     )
 }

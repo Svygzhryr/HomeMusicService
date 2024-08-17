@@ -23,7 +23,7 @@ export const Track: FC<TrackProps> = ({ name, cover, file }) => {
         setActiveInterval(interval)
         setIsPlaying(true)
         setIsGlobalPlaying(true)
-        setGlobalAudioRef(track)
+        setGlobalAudioRef(audioRef)
         track.play()
     }
 

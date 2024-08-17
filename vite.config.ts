@@ -20,7 +20,7 @@ export default ({ mode }: { mode: string }) => {
             },
         },
         server: {
-            port: +!process.env.VITE_PORT || 3000,
+            port: +process.env.VITE_PORT || 3000,
         },
     })
 }

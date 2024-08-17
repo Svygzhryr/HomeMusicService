@@ -50,11 +50,12 @@ export const Player = () => {
                 currentDuration={currentDuration}
                 isPlaying={isPlaying}
                 setCurrentDuration={setCurrentDuration}
+                isInPlayer
             />
             <div onClick={handleVolumeClick} className={styles.volumeContainer}>
                 <div
                     style={{
-                        height: `${Math.round(volume * 100 * 2)}%`,
+                        height: `${Math.round(volume * 100 * 2.4)}%`,
                         animationPlayState: isPlaying ? 'running' : 'paused',
                     }}
                     className={styles.volume}
