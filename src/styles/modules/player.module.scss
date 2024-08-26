@@ -49,6 +49,30 @@
     animation: volumeactive 3s infinite;
 }
 
+.prev,
+.next,
+.pause {
+    width: 30px;
+    height: 30px;
+    padding: 4px;
+    text-align: center;
+}
+
+.info {
+}
+
+.title,
+.author {
+    display: inline-block;
+    font-size: 16px;
+}
+
+.author::after {
+    display: inline-block;
+    content: '—';
+    margin: 0 4px;
+}
+
 @keyframes isplaying {
     0% {
         transform: rotate(0deg);

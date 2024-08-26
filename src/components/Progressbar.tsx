@@ -1,4 +1,4 @@
-import React, { FC, MouseEvent, useEffect } from 'react'
+import React, { FC, MouseEvent } from 'react'
 import styles from '../styles/modules/progressbar.module.scss'
 
 interface ProgressbarProps {
@@ -24,8 +24,9 @@ export const Progressbar: FC<ProgressbarProps> = ({
     function handleProgressClick(e: MouseEvent) {
         if (!audioRef?.current) return
         e.stopPropagation()
-        const x = e.pageX - e.currentTarget.getBoundingClientRect().left
-        const barPercent = x / 200
+        const { width, left } = e.currentTarget.getBoundingClientRect()
+        const x = e.pageX - left
+        const barPercent = x / width
         const maxDuration = audioRef.current.duration
 
         setCurrentDuration(maxDuration * barPercent)

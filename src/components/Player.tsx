@@ -41,10 +41,20 @@ export const Player = () => {
 
     return (
         <div className={styles.wrapper}>
-            <div
+            {/* <div
                 style={{ animationPlayState: isPlaying ? 'running' : 'paused' }}
                 className={styles.status}
-            ></div>
+            ></div> */}
+            <div className={styles.info}>
+                <h3 className={styles.author}>Author here</h3>
+                <h3 className={styles.title}>Somename here</h3>
+            </div>
+            <div className={styles.buttons}>
+                <button className={styles.prev}></button>
+                <button className={styles.pause}>||</button>
+                <button className={styles.next}></button>
+            </div>
+
             <Progressbar
                 audioRef={audioRef}
                 currentDuration={currentDuration}
@@ -52,6 +62,7 @@ export const Player = () => {
                 setCurrentDuration={setCurrentDuration}
                 isInPlayer
             />
+
             <div onClick={handleVolumeClick} className={styles.volumeContainer}>
                 <div
                     style={{
